@@ -1,0 +1,12 @@
+type User {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  isVerified: Boolean
+}
+
+type Query {
+  users: [User!]
+  user(email: String!): [User!]
+}
