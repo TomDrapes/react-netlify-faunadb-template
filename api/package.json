@@ -1,0 +1,23 @@
+{
+  "name": "netlify-fauna-api",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "faunadb": "^2.13.1"
+  },
+  "scripts": {
+    "bootstrap": "netlify dev:exec node ./scripts/bootstrap-fauna-database.js",
+    "start": "netlify dev"
+  },
+  "devDependencies": {
+    "netlify-cli": "^2.57.0"
+  },
+  "proxy": {
+    "/.netlify/functions": {
+      "target": "http://localhost:8888",
+      "pathRewrite": {
+        "^/\\.netlify/functions": ""
+      }
+    }
+  }
+}
