@@ -1,0 +1,16 @@
+{
+  "name": "functions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "install": "yarn build"
+  },
+  "dependencies": {
+    "utils": "file:utils"
+  },
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}
