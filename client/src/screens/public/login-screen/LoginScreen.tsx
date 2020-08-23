@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import {
   Box,
   Card,
-  TextField,
   makeStyles,
   useTheme,
   Theme,
-  Button,
-  Divider,
-  Grid,
   Tab,
   Tabs,
 } from "@material-ui/core";
@@ -55,6 +51,7 @@ export const LoginScreen = () => {
             value={tabValue}
             onChange={handleChange}
             aria-label="simple tabs example"
+            style={{ borderBottom: `1px solid ${theme.palette.grey[400]}` }}
           >
             <Tab label="Log In" {...a11yProps(0)} />
             <Tab label="Create Account" {...a11yProps(1)} />

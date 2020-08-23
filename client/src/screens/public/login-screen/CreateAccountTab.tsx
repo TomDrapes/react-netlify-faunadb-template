@@ -1,4 +1,4 @@
-import { Grid, TextField, Button, Divider } from "@material-ui/core";
+import { Grid, Button, Divider } from "@material-ui/core";
 import { Formik, Form } from "formik";
 import React, { useContext } from "react";
 import { FormField } from "../../../components/FormField";
@@ -14,9 +14,9 @@ export const CreateAccountTab = () => {
   const authContext = useContext(AuthContext);
 
   const handleSubmit = (values: any) => {
-    console.log(values);
     authContext?.authDispatch.signUp(values);
   };
+
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form>

@@ -1,41 +1,19 @@
 import React from "react";
-import { Box, makeStyles, ThemeProvider } from "@material-ui/core";
-import { Route, Switch, BrowserRouter } from "react-router-dom";
-import { HomeScreen } from "./screens/HomeScreen";
-import { PageNotFoundScreen } from "./screens/public/PageNotFoundScreen";
+import { ThemeProvider } from "@material-ui/core";
 import { customTheme } from "./theme/CustomTheme";
 import { AuthProvider } from "./contexts/auth/AuthContext";
-
-const useStyles = makeStyles({
-  root: {
-    height: "100vh",
-    width: "100vw",
-    bgcolor: "red",
-    display: "flex",
-    boxSizing: "border-box",
-    flexDirection: "column",
-  },
-});
+import { SnackbarProvider } from "./contexts/snackbar/SnackbarContext";
+import { AppShell } from "./AppShell";
 
 function App() {
-  const classes = useStyles();
   return (
-    <AuthProvider>
-      <ThemeProvider theme={customTheme}>
-        <Box className={classes.root}>
-          <BrowserRouter>
-            <Switch>
-              <Route exact path="/">
-                <HomeScreen />
-              </Route>
-              <Route>
-                <PageNotFoundScreen />
-              </Route>
-            </Switch>
-          </BrowserRouter>
-        </Box>
-      </ThemeProvider>
-    </AuthProvider>
+    <ThemeProvider theme={customTheme}>
+      <SnackbarProvider>
+        <AuthProvider>
+          <AppShell />
+        </AuthProvider>
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 }
 

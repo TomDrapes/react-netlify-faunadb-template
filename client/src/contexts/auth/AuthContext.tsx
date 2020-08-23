@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo } from "react";
+import React, { ReactNode, useContext, useEffect, useMemo } from "react";
 import axios from "axios";
 import {
   AuthContextState,
@@ -7,6 +7,7 @@ import {
   SignupDetails,
 } from "./auth-context-model";
 import localForage from "localforage";
+import { SnackbarContext } from "../snackbar/SnackbarContext";
 
 const AuthContext = React.createContext<AuthContextState | undefined>(
   undefined
@@ -16,6 +17,8 @@ interface Props {
   children: ReactNode;
 }
 const AuthProvider = (props: Props) => {
+  const snackbarContext = useContext(SnackbarContext);
+
   const getToken = async () => {
     return await localForage.getItem(
       "userToken",
@@ -73,14 +76,29 @@ const AuthProvider = (props: Props) => {
           .then((res) => {
             console.log(res);
             if (res.status === 200) {
+              snackbarContext?.setSnackbar({
+                open: true,
+                status: "success",
+                message: "Login successful",
+              });
               localForage.setItem("userToken", res.data.response.secret);
-              // axios.defaults.headers.common["Authorization"] =
-              //   "Bearer " + res.data.token;
-
-              // dispatch({ type: "SIGN_IN", token: res.data.token });
+              dispatch({ type: "SIGN_IN", token: res.data.response.secret });
+              return;
             }
+            snackbarContext?.setSnackbar({
+              open: true,
+              status: "error",
+              message: "Login failed",
+            });
           })
-          .catch((e) => console.log(e));
+          .catch((e) => {
+            console.log(e);
+            snackbarContext?.setSnackbar({
+              open: true,
+              status: "error",
+              message: "Login failed",
+            });
+          });
       },
       signUp: async (data: SignupDetails) => {
         console.log("signup");
@@ -91,6 +109,26 @@ const AuthProvider = (props: Props) => {
           )
           .then((res) => {
             console.log(res);
+            if (res.status === 200) {
+              snackbarContext?.setSnackbar({
+                open: true,
+                status: "success",
+                message: "Sign up successful",
+              });
+              return;
+            }
+            snackbarContext?.setSnackbar({
+              open: true,
+              status: "error",
+              message: "Sign up failed",
+            });
+          })
+          .catch((err) => {
+            snackbarContext?.setSnackbar({
+              open: true,
+              status: "error",
+              message: "Sign up failed",
+            });
           });
       },
       signOut: () => dispatch({ type: "SIGN_OUT" }),

@@ -23,6 +23,7 @@ export const customTheme = createMuiTheme({
     },
     success: {
       main: "#69E228",
+      light: "#1FD60A",
     },
   },
 });

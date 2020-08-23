@@ -1,5 +1,5 @@
 import { query, Client } from "faunadb";
-import { queryDB } from "utils";
+import { queryDB } from "../utils/src";
 
 interface LoginData {
   email: string;

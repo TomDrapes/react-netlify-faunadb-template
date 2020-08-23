@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { LoginScreen } from "./public/login-screen/LoginScreen";
 import { Dashboard } from "./private/Dashboard";
+import { AuthContext } from "../contexts/auth/AuthContext";
 
 export const HomeScreen = () => {
-  const token = null;
+  const authContext = useContext(AuthContext);
 
-  if (!token) return <LoginScreen />;
+  if (!authContext?.authState.userToken) return <LoginScreen />;
   return <Dashboard />;
 };
