@@ -13,7 +13,7 @@ export function queryDB(faunaQuery: Expr, queryOptions?: QueryOptions) {
 
   return client
     .query(faunaQuery)
-    .then((res) => {
+    .then((res: any) => {
       return {
         statusCode: 200,
         headers,
@@ -23,7 +23,7 @@ export function queryDB(faunaQuery: Expr, queryOptions?: QueryOptions) {
         }),
       };
     })
-    .catch((err) => {
+    .catch((err: any) => {
       return {
         statusCode: 500,
         headers,

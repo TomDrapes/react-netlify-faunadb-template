@@ -8,7 +8,7 @@ This app is built using the jamStack and utilises Netlify and FaunaDb to allow f
 
 ### Requirements for local development
 
-#### Install Netlify CLI
+#### Pre-requisits: Install Netlify CLI
 
 You will need Netlify CLI
 `npm install -g netlify-cli`
@@ -16,7 +16,7 @@ You will need Netlify CLI
 You will need to be logged in on Netlify CLI
 `netlify login`
 
-### Create a database
+### Step One: Create a database
 
 Login to the FaunaDb Cloud console, then:
 
@@ -24,23 +24,23 @@ Login to the FaunaDb Cloud console, then:
 - Name the database
 - Click 'Save'
 
-### Create a database access key
+### Step Two: Create a database access key
 
 In the Fauna Cloud Console:
 
 - Click “Security” in the left navigation
 - Click “New Key”
-- Make sure that the “Database” field is set to “Netlify”
-- Make sure that the “Role” field is set to “Admin”
-- Enter “Netlify” as the “Key Name”
+- In the database field select the DB that you created in Step One
+- Select the role you would like to create an access key for.
+- [Optional] Enter a name for the new key
 - Click “Save”
 
-### Save the database access key
+### Step Three: Save the database access key
 
 You need to save the access key somewhere safe, because there is no way to
 retrieve it after you close the browser tab.
 
-copy and rename the `.example.env` file to `.env` and replace the placeholder with your secret key. Make sure you don't commit this file.
+In the api directory, copy and rename the `.example.env` file to `.env`. Then replace the placeholder with your secret key. Make sure you don't commit this file.
 
 ### Set the database access key in your terminal environment
 
