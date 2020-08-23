@@ -18,6 +18,12 @@ interface Props {
 }
 const AuthProvider = (props: Props) => {
   const snackbarContext = useContext(SnackbarContext);
+  const showSnackbar = (status: "success" | "error", message: string) =>
+    snackbarContext?.setSnackbar({
+      open: true,
+      status: status,
+      message: message,
+    });
 
   const getToken = async () => {
     return await localForage.getItem(
@@ -67,7 +73,6 @@ const AuthProvider = (props: Props) => {
   const authDispatch = useMemo(
     () => ({
       signIn: async (data: SignInDetails) => {
-        console.log(data);
         axios
           .post(
             "http://localhost:8888/.netlify/functions/login",
@@ -76,28 +81,15 @@ const AuthProvider = (props: Props) => {
           .then((res) => {
             console.log(res);
             if (res.status === 200) {
-              snackbarContext?.setSnackbar({
-                open: true,
-                status: "success",
-                message: "Login successful",
-              });
+              showSnackbar("success", "Login successful");
               localForage.setItem("userToken", res.data.response.secret);
               dispatch({ type: "SIGN_IN", token: res.data.response.secret });
               return;
             }
-            snackbarContext?.setSnackbar({
-              open: true,
-              status: "error",
-              message: "Login failed",
-            });
+            showSnackbar("error", "Login failed");
           })
           .catch((e) => {
-            console.log(e);
-            snackbarContext?.setSnackbar({
-              open: true,
-              status: "error",
-              message: "Login failed",
-            });
+            showSnackbar("error", "Login failed");
           });
       },
       signUp: async (data: SignupDetails) => {
@@ -110,25 +102,13 @@ const AuthProvider = (props: Props) => {
           .then((res) => {
             console.log(res);
             if (res.status === 200) {
-              snackbarContext?.setSnackbar({
-                open: true,
-                status: "success",
-                message: "Sign up successful",
-              });
+              showSnackbar("success", "Sign up successful");
               return;
             }
-            snackbarContext?.setSnackbar({
-              open: true,
-              status: "error",
-              message: "Sign up failed",
-            });
+            showSnackbar("error", "Sign up failed");
           })
           .catch((err) => {
-            snackbarContext?.setSnackbar({
-              open: true,
-              status: "error",
-              message: "Sign up failed",
-            });
+            showSnackbar("error", "Sign up failed");
           });
       },
       signOut: () => dispatch({ type: "SIGN_OUT" }),
